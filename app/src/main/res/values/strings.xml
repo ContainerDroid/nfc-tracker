@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">NFC Tracker</string>
+    <string name="app_name">EDEN NFC Tracker</string>
+
+    <!--  Welcome Page Strings -->
+    <string name="welcome_tagline">A better way to track your things.</string>
+    <string name="welcome_setup">Setup this device as:</string>
+
 </resources>
