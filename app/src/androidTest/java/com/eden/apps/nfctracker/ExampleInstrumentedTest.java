@@ -1,4 +1,4 @@
-package com.lineageplus.apps.nfctracker;
+package com.eden.apps.nfctracker;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

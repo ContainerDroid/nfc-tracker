@@ -1,4 +1,4 @@
-package com.lineageplus.apps.nfctracker;
+package com.eden.apps.nfctracker;
 
 import org.junit.Test;
 
