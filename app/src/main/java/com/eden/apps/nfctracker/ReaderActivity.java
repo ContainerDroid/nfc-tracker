@@ -1,7 +1,6 @@
 package com.eden.apps.nfctracker;
 
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +43,9 @@ public class ReaderActivity extends AppCompatActivity {
         });
 
         // set status page as the default one
-        mBottomNavigationView.getMenu().findItem(R.id.reader_action_status).setChecked(true);
+        mBottomNavigationView.getMenu().findItem(R.id.reader_action_settings).setChecked(true);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.reader_fragment_placeholder, new ReaderSettingsFragment())
+                .commit();
     }
 }

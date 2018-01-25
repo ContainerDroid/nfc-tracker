@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">EDEN NFC Tracker</string>
 
+    <!--  General Strings -->
+    <string name="disconnected">Disconnected</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="not_set">Not set</string>
+
+
     <!--  Welcome Page Strings -->
     <string name="welcome_tagline">A better way to track your things.</string>
     <string name="welcome_setup">This device is a:</string>
@@ -13,5 +20,19 @@
     <string name="reader_title_status">Reader Status</string>
     <string name="reader_text_settings">Settings</string>
     <string name="reader_text_status">Status</string>
+
+    <string name="reader_settings_wifi">WI-FI</string>
+
+    <string name="reader_settings_hub">Hub</string>
+    <string name="reader_settings_hub_connected">Connected to hub</string>
+    <string name="reader_settings_hub_available">Available Hubs</string>
+
+    <string name="reader_settings_discoverable">Discoverable</string>
+    <string name="reader_settings_discoverable_name">Reader Name</string>
+    <string name="reader_settings_discoverable_check_summary">Make your device discoverable</string>
+    <string name="reader_settings_discoverable_check_title">Discoverable</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

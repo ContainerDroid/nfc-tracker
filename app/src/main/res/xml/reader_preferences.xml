@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="@string/reader_settings_wifi"
+        android:summary="@string/disconnected"/>
+
+
+    <PreferenceScreen
+        android:title="@string/reader_settings_hub"
+        android:summary="@string/disconnected">
+
+        <PreferenceCategory
+            android:title="@string/reader_settings_hub_connected">
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:title="@string/reader_settings_hub_available">
+
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+
+
+    <PreferenceScreen
+        android:title="@string/reader_settings_discoverable"
+        android:summary="@string/off">
+
+        <EditTextPreference
+            android:title="@string/reader_settings_discoverable_name"
+            android:summary="@string/not_set"/>
+
+        <SwitchPreference
+            android:title="@string/reader_settings_discoverable_check_title"
+            android:summary="@string/reader_settings_discoverable_check_summary"
+            android:defaultValue="false" />
+
+    </PreferenceScreen>
+
+
+
+</PreferenceScreen>
