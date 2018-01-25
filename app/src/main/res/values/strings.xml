@@ -4,6 +4,10 @@
     <!--  Welcome Page Strings -->
     <string name="welcome_tagline">A better way to track your things.</string>
     <string name="welcome_setup">This device is a:</string>
+    <string name="title_activity_hub">HubActivity</string>
+    <string name="title_hub_action_readers">Readers</string>
+    <string name="title_hub_action_enclosures">Enclosures</string>
+    <string name="title_hub_action_categories">Categories</string>
 
     <!-- Reader Page Strings -->
     <string name="reader_title_status">Reader Status</string>

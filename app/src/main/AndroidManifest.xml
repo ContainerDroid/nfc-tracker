@@ -22,6 +22,9 @@
             android:name=".ReaderActivity"
             android:theme="@style/AppNoActionBar">
         </activity>
+        <activity
+            android:name=".HubActivity"
+            android:label="@string/title_activity_hub"></activity>
     </application>
 
 </manifest>

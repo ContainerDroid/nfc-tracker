@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hub_action_readers"
+        android:icon="@drawable/ic_nfc"
+        android:title="@string/title_hub_action_readers" />
+
+    <item
+        android:id="@+id/hub_action_enclosures"
+        android:icon="@drawable/ic_kitchen"
+        android:title="@string/title_hub_action_enclosures" />
+
+    <item
+        android:id="@+id/hub_action_categories"
+        android:icon="@drawable/ic_drawers"
+        android:title="@string/title_hub_action_categories" />
+
+</menu>

@@ -28,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mHubDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(getApplicationContext(), HubActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
