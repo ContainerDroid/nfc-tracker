@@ -3,7 +3,10 @@
 
     <Preference
         android:title="@string/reader_settings_wifi"
-        android:summary="@string/disconnected"/>
+        android:summary="@string/disconnected">
+
+        <intent android:action="android.settings.WIFI_SETTINGS"/>
+    </Preference>
 
     <PreferenceScreen
         android:title="@string/reader_settings_hub"
