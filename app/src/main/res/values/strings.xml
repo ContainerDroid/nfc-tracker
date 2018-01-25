@@ -3,6 +3,6 @@
 
     <!--  Welcome Page Strings -->
     <string name="welcome_tagline">A better way to track your things.</string>
-    <string name="welcome_setup">Setup this device as:</string>
+    <string name="welcome_setup">This device is a:</string>
 
 </resources>
