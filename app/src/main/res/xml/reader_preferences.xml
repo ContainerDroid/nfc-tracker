@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:key="reader_settings_wifi_key"
         android:title="@string/reader_settings_wifi"
         android:summary="@string/disconnected">
 
@@ -26,14 +27,19 @@
 
 
     <PreferenceScreen
+        android:key="reader_settings_discoverable_key"
         android:title="@string/reader_settings_discoverable"
         android:summary="@string/off">
 
         <EditTextPreference
+            android:persistent="true"
+            android:key="reader_settings_discoverable_name_key"
             android:title="@string/reader_settings_discoverable_name"
             android:summary="@string/not_set"/>
 
         <SwitchPreference
+            android:persistent="true"
+            android:key="reader_settings_discoverable_check_key"
             android:title="@string/reader_settings_discoverable_check_title"
             android:summary="@string/reader_settings_discoverable_check_summary"
             android:defaultValue="false" />

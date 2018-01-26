@@ -3,8 +3,8 @@
 
     <!--  General Strings -->
     <string name="disconnected">Disconnected</string>
-    <string name="off">OFF</string>
-    <string name="on">ON</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
     <string name="not_set">Not set</string>
 
 
