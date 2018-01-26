@@ -32,6 +32,11 @@
     <string name="reader_settings_discoverable_check_summary">Make your device discoverable</string>
     <string name="reader_settings_discoverable_check_title">Discoverable</string>
 
+
+    <string name="reader_status_all_good">Everything is working properly</string>
+    <string name="reader_status_nfc_text">Last seen NFC Tag:</string>
+    <string name="reader_status_not_seen">No NFC tag until now</string>
+
     <!-- Hub Page Strings -->
     <string name="hub_title_status">Hub Status</string>
     <string name="hub_text_settings">Settings</string>

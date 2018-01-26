@@ -1,5 +1,6 @@
 package com.eden.apps.nfctracker;
 
+import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -29,23 +30,31 @@ public class ReaderActivity extends AppCompatActivity {
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.reader_action_status:
-                        item.setChecked(true);
-                        return true;
+                        fragment = new ReaderStatusFragment();
+                        break;
                     case R.id.reader_action_settings:
-                        item.setChecked(true);
-                        return true;
+                        fragment = new ReaderSettingsFragment();
+                        break;
                     default:
                         return false;
                 }
+                return mSwitchFragment(item, fragment);
             }
         });
 
-        // set status page as the default one
-        mBottomNavigationView.getMenu().findItem(R.id.reader_action_settings).setChecked(true);
+        // set readers setting page as the default one
+        mSwitchFragment(mBottomNavigationView.getMenu().findItem(R.id.reader_action_settings), new ReaderSettingsFragment());
+    }
+
+
+    private boolean mSwitchFragment(MenuItem item, Fragment fragment) {
+        item.setChecked(true);
         getFragmentManager().beginTransaction()
-                .replace(R.id.reader_fragment_placeholder, new ReaderSettingsFragment())
+                .replace(R.id.reader_fragment_placeholder, fragment)
                 .commit();
+        return true;
     }
 }
