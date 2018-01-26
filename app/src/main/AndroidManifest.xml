@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name=".HubActivity"
+            android:theme="@style/AppNoActionBar"
             android:label="@string/title_activity_hub"></activity>
     </application>
 
