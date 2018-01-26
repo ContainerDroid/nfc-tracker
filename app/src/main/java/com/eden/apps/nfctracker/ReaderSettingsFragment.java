@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -33,6 +34,9 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
     public static final String DISCOVERABLE_NAME_KEY = "reader_settings_discoverable_name_key";
     public static final String DISCOVERABLE_CHECK_KEY = "reader_settings_discoverable_check_key";
 
+    public static final String HUB_CONNECTED_KEY = "reader_settings_hub_connected";
+    public static final String HUB_AVAILABLE_KEY = "reader_settings_hub_available";
+
     public ReaderSettingsFragment() {
     }
 
@@ -43,6 +47,10 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
         addPreferencesFromResource(R.xml.reader_preferences);
 
         showCurrentPreferences();
+        addAvailableHub(new Hub("Al Pacino", "192.168.1.78"));
+        addAvailableHub(new Hub("Gigi", "192.168.1.178"));
+        addAvailableHub(new Hub("Tamara", "192.168.1.278"));
+        addAvailableHub(new Hub("Sara", "192.168.1.222"));
     }
 
     private void setWifiSummary() {
@@ -77,6 +85,16 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
         setDiscoverableSummary(getPreferenceScreen().getSharedPreferences());
         setDiscoverableNameSummary(getPreferenceScreen().getSharedPreferences());
     }
+
+    private void addAvailableHub(Hub hub) {
+        PreferenceCategory availableHubs = (PreferenceCategory) findPreference(HUB_AVAILABLE_KEY);
+        Preference newHub = new Preference(getActivity().getApplicationContext());
+        newHub.setTitle(hub.getName());
+        newHub.setSummary("found at IP " + hub.getIP());
+        newHub.setPersistent(true);
+        availableHubs.addPreference(newHub);
+    }
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

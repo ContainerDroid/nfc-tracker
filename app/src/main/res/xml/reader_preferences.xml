@@ -14,17 +14,14 @@
         android:summary="@string/disconnected">
 
         <PreferenceCategory
-            android:title="@string/reader_settings_hub_connected">
-
-        </PreferenceCategory>
+            android:key="reader_settings_hub_connected"
+            android:title="@string/reader_settings_hub_connected"/>
 
         <PreferenceCategory
-            android:title="@string/reader_settings_hub_available">
-
-        </PreferenceCategory>
+            android:key="reader_settings_hub_available"
+            android:title="@string/reader_settings_hub_available"/>
 
     </PreferenceScreen>
-
 
     <PreferenceScreen
         android:key="reader_settings_discoverable_key"
