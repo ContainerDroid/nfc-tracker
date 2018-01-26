@@ -5,7 +5,6 @@
         android:title="@string/reader_settings_wifi"
         android:summary="@string/disconnected"/>
 
-
     <PreferenceScreen
         android:title="@string/reader_settings_hub"
         android:summary="@string/disconnected">

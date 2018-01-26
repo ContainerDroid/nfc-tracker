@@ -32,6 +32,16 @@
     <string name="reader_settings_discoverable_check_summary">Make your device discoverable</string>
     <string name="reader_settings_discoverable_check_title">Discoverable</string>
 
+    <!-- Hub Page Strings -->
+    <string name="hub_title_status">Hub Status</string>
+    <string name="hub_text_settings">Settings</string>
+    <string name="hub_text_status">Status</string>
+
+    <string name="hub_settings_discoverable">Discoverable</string>
+    <string name="hub_settings_discoverable_name">Hub Name</string>
+    <string name="hub_settings_discoverable_check_summary">Make your hub discoverable</string>
+    <string name="hub_settings_discoverable_check_title">Discoverable</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

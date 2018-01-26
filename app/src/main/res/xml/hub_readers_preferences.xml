@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceScreen
+        android:title="@string/hub_settings_discoverable"
+        android:summary="@string/off">
+
+        <EditTextPreference
+            android:title="@string/hub_settings_discoverable_name"
+            android:summary="@string/not_set"/>
+
+        <SwitchPreference
+            android:title="@string/hub_settings_discoverable_check_title"
+            android:summary="@string/hub_settings_discoverable_check_summary"
+            android:defaultValue="false" />
+
+    </PreferenceScreen>
+
+</PreferenceScreen>
