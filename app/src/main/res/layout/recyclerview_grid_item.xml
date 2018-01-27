@@ -2,16 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:padding="5dp"
-    android:layout_width="300dp"
-    android:layout_height="300dp">
+    android:padding="30dp"
+    android:layout_width="575dp"
+    android:layout_height="575dp">
 
     <TextView
         android:id="@+id/info_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:background="@color/primaryDarkColor"
-        android:textColor="@color/primaryTextColor"/>
+        android:gravity="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="35sp" />
 
 </LinearLayout>

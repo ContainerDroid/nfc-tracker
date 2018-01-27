@@ -1,7 +1,10 @@
 package com.eden.apps.nfctracker;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +12,15 @@ import android.widget.TextView;
 
 public class HubCategoriesAdapter extends RecyclerView.Adapter<HubCategoriesAdapter.ViewHolder> {
 
-    private String[] mData = new String[0];
     private LayoutInflater mInflater;
+    private Cursor cursor;
+    private Context context;
     private ItemClickListener mClickListener;
 
-    // data is passed into the constructor
-    HubCategoriesAdapter(Context context, String[] data) {
+    HubCategoriesAdapter(Context context, Cursor cursor) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.cursor = cursor;
+        this.context = context;
     }
 
     // inflates the cell layout from xml when needed
@@ -29,14 +33,56 @@ public class HubCategoriesAdapter extends RecyclerView.Adapter<HubCategoriesAdap
     // binds the data to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData[position];
-        holder.myTextView.setText(animal);
+        this.cursor = context.getContentResolver().query(Uri.parse(CategoriesProvider.tableUri), null, null, null, "id");
+        String categoryName = getCategoryName(position, this.cursor);
+        if (categoryName != null) {
+            holder.myTextView.setText(categoryName);
+        }
     }
 
+    private String getCategoryName(int position, Cursor cursorV) {
+        if (position == 0) {
+            return "+";
+        }
+
+        String categoryName = null;
+        Log.d("PISTOL", "trying to get category name for position " + position);
+
+        while (cursorV.moveToNext() && position != 0) {
+            categoryName = cursorV.getString(cursorV.getColumnIndex("name"));
+            position--;
+        }
+
+        if (categoryName != null)
+            Log.d("PISTOL", "category name = " + categoryName);
+        return categoryName;
+    }
+
+    static public Cursor getItem(Cursor cursor, int position) {
+        int size = 0;
+        do {
+            if (position == size)
+                return cursor;
+            size++;
+        } while (cursor.moveToNext());
+        return null;
+    }
+
+
+    private int getSize(Cursor cursorV) {
+        int size = 0;
+        while (cursorV.moveToNext()) {
+            size++;
+        }
+        Log.d("PISTOL", "size is " + size);
+        return size;
+    }
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        Log.d("PISTOL", "getItemCount");
+        this.cursor = context.getContentResolver().query(Uri.parse(CategoriesProvider.tableUri), null, null, null, "id");
+        return getSize(this.cursor) + 1;
     }
 
 
@@ -58,7 +104,7 @@ public class HubCategoriesAdapter extends RecyclerView.Adapter<HubCategoriesAdap
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData[id];
+        return "";
     }
 
     // allows clicks events to be caught

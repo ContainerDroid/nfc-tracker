@@ -36,6 +36,13 @@
             android:name=".HubActivity"
             android:theme="@style/AppNoActionBar"
             android:label="@string/title_activity_hub"></activity>
+
+        <provider
+            android:name="com.eden.apps.nfctracker.CategoriesProvider"
+            android:authorities="com.eden.apps.nfctracker"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
