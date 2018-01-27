@@ -4,26 +4,27 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class CategoriesDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "categories.db";
+public class ItemDatabaseHelper extends SQLiteOpenHelper {
+    private static final String DB_NAME = "items.db";
     private static final int DB_VERSION = 1;
 
-    public CategoriesDatabaseHelper(Context context) {
+    public ItemDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS categories (" +
+        db.execSQL("CREATE TABLE IF NOT EXISTS items (" +
                 "id INTEGER PRIMARY KEY," +
                 "name TEXT," +
-                "parentID INTEGER" +
+                "tag TEXT," +
+                "category TEXT" +
                 ");");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS categories");
+        db.execSQL("DROP TABLE IF EXISTS items");
         onCreate(db);
     }
 }

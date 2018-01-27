@@ -102,6 +102,14 @@ public class HubCategoriesFragment extends Fragment implements HubCategoriesAdap
 
             CreateCategoryFragment mDialog = new CreateCategoryFragment(this);
             mDialog.show(getFragmentManager(), "CreateCategoryFragment");
+        } else {
+            Uri categoriesURI = Uri.parse(CategoriesProvider.tableUri);
+            Cursor cursor = getActivity().getApplicationContext().getContentResolver().query(categoriesURI, null, null, null, "id");
+            Cursor itemCursor = HubCategoriesAdapter.getItem(cursor, position);
+            Fragment fragment = new CategoryFragment(itemCursor.getString(cursor.getColumnIndex("name")));
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.hub_fragment_placeholder, fragment)
+                    .commit();
         }
     }
 
