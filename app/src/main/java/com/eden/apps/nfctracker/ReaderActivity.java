@@ -189,4 +189,9 @@ public class ReaderActivity extends AppCompatActivity implements TCPListener {
     public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
 
     }
+
+    @Override
+    public void addReader(String reader) {
+
+    }
 }

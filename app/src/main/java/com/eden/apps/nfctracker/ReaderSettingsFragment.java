@@ -10,6 +10,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -26,8 +27,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class ReaderSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+public class ReaderSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, TCPListener {
 
     public static final String WIFI_KEY = "reader_settings_wifi_key";
 
@@ -39,6 +43,11 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
     public static final String HUB_AVAILABLE_KEY = "reader_settings_hub_available";
 
     public static final String HUB_FIXED_KEY = "reader_settings_fixed_hub";
+
+    public static final Integer SERVER_PORT = 12345;
+    private Handler UIHandler = new Handler();
+
+    private Boolean isConnected = false;
 
     public ReaderSettingsFragment() {
     }
@@ -100,7 +109,22 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
 
     private void connectToFixedHub(String mIP) {
         Log.d("Pistol", "connectToFixedHub " + mIP);
-        Toast.makeText(getActivity().getApplicationContext(), mIP, Toast.LENGTH_SHORT).show();
+
+
+        TCPCommunicator mTCPClient = TCPCommunicator.getInstance();
+        TCPCommunicator.addListener(this);
+        mTCPClient.initClient(mIP, SERVER_PORT);
+
+
+        JSONObject mObj = new JSONObject();
+        try {
+            mObj.put("state", "detect_existing_tags");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mTCPClient.writeToSocketFromClient(mObj, UIHandler, getActivity().getApplicationContext());
+        Toast.makeText(getActivity().getApplicationContext(), "Trying to send a message to " + mIP, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,5 +157,19 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
         super.onPause();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onTCPMessageReceived(String message) {
+
+    }
+
+    @Override
+    public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
+        this.isConnected = isConnectedNow;
+    }
+
+    @Override
+    public void addReader(String reader) {
     }
 }

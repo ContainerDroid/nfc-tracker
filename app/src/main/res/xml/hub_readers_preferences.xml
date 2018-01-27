@@ -33,4 +33,8 @@
         android:key="hub_ip_address"
         android:summary="IP address" />
 
+    <Preference
+        android:key="hub_reader_connected"
+        android:title="Readers Connected" />
+
 </PreferenceScreen>

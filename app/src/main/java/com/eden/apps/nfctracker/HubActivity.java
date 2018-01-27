@@ -1,7 +1,11 @@
 package com.eden.apps.nfctracker;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +14,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class HubActivity extends AppCompatActivity implements TCPListener {
+public class HubActivity extends AppCompatActivity implements TCPListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     Toolbar mToolbar = null;
     BottomNavigationView mBottomNavigationView = null;
     TCPCommunicator mTCPServer = null;
     public static final Integer SERVER_PORT = 12345;
+    Fragment fragment;
 
     private boolean mSwitchFragment(MenuItem item, Fragment fragment) {
         item.setChecked(true);
@@ -54,6 +59,7 @@ public class HubActivity extends AppCompatActivity implements TCPListener {
                     default:
                         return false;
                 }
+                HubActivity.this.fragment = fragment;
                 return mSwitchFragment(item, fragment);
             }
         });
@@ -76,6 +82,15 @@ public class HubActivity extends AppCompatActivity implements TCPListener {
 
     @Override
     public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
+
+    }
+
+    @Override
+    public void addReader(String reader) {
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
 
     }
 }

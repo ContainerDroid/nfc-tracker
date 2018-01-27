@@ -1,8 +1,10 @@
 package com.eden.apps.nfctracker;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -26,9 +28,11 @@ public class TCPCommunicator {
     private static ServerSocket ss;
     private static Socket s;
     private static BufferedReader in;
-    private static BufferedWriter out;
+    private static BufferedWriter out = null;
     private static OutputStream outputStream;
     private static Handler handler = new Handler();
+    private static Handler UIHandler;
+    private static Context appContext;
 
     private TCPCommunicator() {
         allListeners = new ArrayList<TCPListener>();
@@ -57,7 +61,7 @@ public class TCPCommunicator {
         return TCPWriterErrors.OK;
     }
 
-    public static  TCPWriterErrors writeToSocket(JSONObject obj)
+    public static  TCPWriterErrors writeToSocketFromServer(JSONObject obj)
     {
         try
         {
@@ -68,6 +72,49 @@ public class TCPCommunicator {
         {
             e.printStackTrace();
         }
+        return TCPWriterErrors.OK;
+
+    }
+
+    public static  TCPWriterErrors writeToSocketFromClient(final JSONObject obj,Handler handle,Context context)
+    {
+        UIHandler=handle;
+        appContext=context;
+
+        Log.d("PISTOL", "trying to send a message");
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                try
+                {
+                    // kill some time until the connection is established
+                    if (out == null) {
+                        Thread.sleep(1000);
+                    }
+                    String outMsg = obj.toString() + System.getProperty("line.separator");
+                    out.write(outMsg);
+                    out.flush();
+                    Log.d("PISTOL", "sent: " + outMsg);
+                }
+                catch(Exception e)
+                {
+                    UIHandler.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            Toast.makeText(appContext ,"a problem has occured, the app might not be able to reach the server", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
         return TCPWriterErrors.OK;
 
     }
@@ -100,16 +147,37 @@ public class TCPCommunicator {
 
             try {
                 ss = new ServerSocket(TCPCommunicator.getServerPort());
-
                 s = ss.accept();
+
+                for(TCPListener listener:allListeners)
+                    listener.addReader(s.getRemoteSocketAddress().toString());
+
+                // new client connected. should update list
+                handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            for(TCPListener listener:allListeners)
+                                listener.addReader(s.getRemoteSocketAddress().toString());
+                            Log.d("PISTOL", "from runnable");
+                        }
+                    });
+
                 in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 outputStream = s.getOutputStream();
                 out = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+                Log.d("PISTOL", s.toString());
+                Log.d("PISTOL", in.toString());
+
+
                 //receive a message
                 String incomingMsg;
                 while((incomingMsg=in.readLine())!=null)
                 {
                     final String finalMessage=incomingMsg;
+                    Log.d("PISTOL", finalMessage);
+
                     handler.post(new Runnable() {
 
                         @Override
@@ -167,6 +235,11 @@ public class TCPCommunicator {
                 s = new Socket(getServerHost(), getServerPort());
                 in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+
+                Log.d("PISTOL", s.toString());
+                Log.d("PISTOL", in.toString());
+                Log.d("PISTOL", out.toString());
+
                 for(TCPListener listener:allListeners)
                     listener.onTCPConnectionStatusChanged(true);
                 while(true)
@@ -174,7 +247,7 @@ public class TCPCommunicator {
                     String inMsg = in.readLine();
                     if(inMsg!=null)
                     {
-                        Log.i("TcpClient", "received: " + inMsg);
+                        Log.d("TcpClient", "received: " + inMsg);
                         for(TCPListener listener:allListeners)
                             listener.onTCPMessageReceived(inMsg);
                     }

@@ -14,8 +14,10 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HubReadersFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class HubReadersFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, TCPListener {
 
     public static final String WIFI_KEY = "hub_settings_wifi_key";
 
@@ -88,6 +90,7 @@ public class HubReadersFragment extends PreferenceFragment implements SharedPref
 
         addPreferencesFromResource(R.xml.hub_readers_preferences);
         showCurrentPreferences();
+        TCPCommunicator.addListener(this);
     }
 
     @Override
@@ -139,6 +142,10 @@ public class HubReadersFragment extends PreferenceFragment implements SharedPref
         ((BaseAdapter)getPreferenceScreen().getRootAdapter()).notifyDataSetChanged();
     }
 
+    public void setReaders(String readers) {
+        Log.d("PISTOL", "updated the readers: " + readers);
+    }
+
     private void setDiscoverableNameSummary(SharedPreferences sharedPreferences) {
         Preference mDiscoverableName = findPreference(DISCOVERABLE_NAME_KEY);
         mDiscoverableName.setSummary(sharedPreferences.getString(DISCOVERABLE_NAME_KEY, getResources().getText(R.string.not_set).toString()));
@@ -162,5 +169,20 @@ public class HubReadersFragment extends PreferenceFragment implements SharedPref
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onTCPMessageReceived(String message) {
+
+    }
+
+    @Override
+    public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
+
+    }
+
+    @Override
+    public void addReader(String reader) {
+        setReaders(reader);
     }
 }
