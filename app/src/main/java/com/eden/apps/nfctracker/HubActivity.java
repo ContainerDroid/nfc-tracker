@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class HubActivity extends AppCompatActivity {
+public class HubActivity extends AppCompatActivity implements TCPListener {
 
     Toolbar mToolbar = null;
     BottomNavigationView mBottomNavigationView = null;
+    TCPCommunicator mTCPServer = null;
+    public static final Integer SERVER_PORT = 12345;
 
     private boolean mSwitchFragment(MenuItem item, Fragment fragment) {
         item.setChecked(true);
@@ -58,6 +60,22 @@ public class HubActivity extends AppCompatActivity {
 
         // set readers setting page as the default one
         mSwitchFragment(mBottomNavigationView.getMenu().findItem(R.id.hub_action_readers), new HubReadersFragment());
+
+
+        // start the TCP server
+        mTCPServer = TCPCommunicator.getInstance();
+        TCPCommunicator.addListener(this);
+        mTCPServer.initServer(SERVER_PORT);
+
     }
 
+    @Override
+    public void onTCPMessageReceived(String message) {
+        Log.d("PISTOL", "Received message " + message);
+    }
+
+    @Override
+    public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
+
+    }
 }

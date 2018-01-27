@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 
-public class ReaderActivity extends AppCompatActivity {
+public class ReaderActivity extends AppCompatActivity implements TCPListener {
 
     Toolbar mToolbar = null;
     BottomNavigationView mBottomNavigationView = null;
@@ -78,6 +78,7 @@ public class ReaderActivity extends AppCompatActivity {
         // NFC setup
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         handleIntent(getIntent());
+
     }
 
 
@@ -177,5 +178,15 @@ public class ReaderActivity extends AppCompatActivity {
      */
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         adapter.disableForegroundDispatch(activity);
+    }
+
+    @Override
+    public void onTCPMessageReceived(String message) {
+
+    }
+
+    @Override
+    public void onTCPConnectionStatusChanged(boolean isConnectedNow) {
+
     }
 }
