@@ -34,7 +34,6 @@
                 android:layout_weight="0.05"/>
 
             <TextView
-                android:text="@string/reader_status_all_good"
                 android:id="@+id/reader_status_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

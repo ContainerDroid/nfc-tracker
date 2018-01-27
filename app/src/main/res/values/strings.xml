@@ -34,6 +34,8 @@
 
 
     <string name="reader_status_all_good">Everything is working properly</string>
+    <string name="reader_status_no_nfc">This device doesn\'t support NFC.</string>
+    <string name="reader_status_nfc_not_enabled">NFC is not enabled.</string>
     <string name="reader_status_nfc_text">Last seen NFC Tag:</string>
     <string name="reader_status_not_seen">No NFC tag until now</string>
 
