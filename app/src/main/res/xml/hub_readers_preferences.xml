@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="hub_settings_wifi_key"
+        android:title="@string/reader_settings_wifi"
+        android:summary="@string/disconnected">
+
+        <intent android:action="android.settings.WIFI_SETTINGS"/>
+    </Preference>
+
     <PreferenceScreen
+        android:key="hub_settings_discoverable_key"
         android:title="@string/hub_settings_discoverable"
         android:summary="@string/off">
 
         <EditTextPreference
+            android:persistent="true"
+            android:key="hub_settings_discoverable_name_key"
             android:title="@string/hub_settings_discoverable_name"
             android:summary="@string/not_set"/>
 
         <SwitchPreference
+            android:persistent="true"
+            android:key="hub_settings_discoverable_check_key"
             android:title="@string/hub_settings_discoverable_check_title"
             android:summary="@string/hub_settings_discoverable_check_summary"
             android:defaultValue="false" />
 
     </PreferenceScreen>
+
+    <Preference
+        android:key="hub_ip_address"
+        android:summary="IP address" />
 
 </PreferenceScreen>
