@@ -13,6 +13,10 @@
         android:title="@string/reader_settings_hub"
         android:summary="@string/disconnected">
 
+        <EditTextPreference
+            android:key="reader_settings_fixed_hub"
+            android:title="@string/reader_settings_fixed_hub"/>
+
         <PreferenceCategory
             android:key="reader_settings_hub_connected"
             android:title="@string/reader_settings_hub_connected"/>

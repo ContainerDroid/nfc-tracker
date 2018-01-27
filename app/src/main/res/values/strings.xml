@@ -26,6 +26,7 @@
     <string name="reader_settings_hub">Hub</string>
     <string name="reader_settings_hub_connected">Connected to hub</string>
     <string name="reader_settings_hub_available">Available Hubs</string>
+    <string name="reader_settings_fixed_hub">Connect to fixed hub</string>
 
     <string name="reader_settings_discoverable">Discoverable</string>
     <string name="reader_settings_discoverable_name">Reader Name</string>

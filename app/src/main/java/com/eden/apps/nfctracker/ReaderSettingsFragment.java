@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ReaderSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -36,6 +37,8 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
 
     public static final String HUB_CONNECTED_KEY = "reader_settings_hub_connected";
     public static final String HUB_AVAILABLE_KEY = "reader_settings_hub_available";
+
+    public static final String HUB_FIXED_KEY = "reader_settings_fixed_hub";
 
     public ReaderSettingsFragment() {
     }
@@ -95,6 +98,10 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
         availableHubs.addPreference(newHub);
     }
 
+    private void connectToFixedHub(String mIP) {
+        Log.d("Pistol", "connectToFixedHub " + mIP);
+        Toast.makeText(getActivity().getApplicationContext(), mIP, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -104,6 +111,9 @@ public class ReaderSettingsFragment extends PreferenceFragment implements Shared
                 break;
             case DISCOVERABLE_CHECK_KEY:
                 setDiscoverableSummary(sharedPreferences);
+                break;
+            case HUB_FIXED_KEY:
+                connectToFixedHub(sharedPreferences.getString(HUB_FIXED_KEY, "DEFAULT"));
                 break;
             default:
                 break;
