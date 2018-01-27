@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class HubActivity extends AppCompatActivity implements TCPListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     Toolbar mToolbar = null;
@@ -78,6 +81,17 @@ public class HubActivity extends AppCompatActivity implements TCPListener, Share
     @Override
     public void onTCPMessageReceived(String message) {
         Log.d("PISTOL", "Received message " + message);
+
+        JSONObject received;
+        try {
+            received = new JSONObject(message);
+            if (received.getString("state").equals("detect_new_tags")) {
+                String newTag = received.getString("tag");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

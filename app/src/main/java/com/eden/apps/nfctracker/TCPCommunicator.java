@@ -61,17 +61,23 @@ public class TCPCommunicator {
         return TCPWriterErrors.OK;
     }
 
-    public static  TCPWriterErrors writeToSocketFromServer(JSONObject obj)
-    {
-        try
-        {
-            out.write(obj.toString() + System.getProperty("line.separator"));
-            out.flush();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+    public static  TCPWriterErrors writeToSocketFromServer(final JSONObject obj) {
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    out.write(obj.toString() + System.getProperty("line.separator"));
+                    out.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
         return TCPWriterErrors.OK;
 
     }

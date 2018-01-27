@@ -18,6 +18,7 @@ import android.nfc.tech.NfcBarcode;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -39,6 +43,12 @@ public class ReaderActivity extends AppCompatActivity implements TCPListener {
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
+
+    public static final Integer DETECT_NEW_TAGS = 1;
+
+    public Integer state;
+
+    private Handler UIHandler = new Handler();
 
 
     @Override
@@ -78,6 +88,9 @@ public class ReaderActivity extends AppCompatActivity implements TCPListener {
         // NFC setup
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         handleIntent(getIntent());
+
+        // register as listener TCP
+        TCPCommunicator.getInstance().addListener(this);
 
     }
 
@@ -130,6 +143,22 @@ public class ReaderActivity extends AppCompatActivity implements TCPListener {
                             this.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)),
                             Toast.LENGTH_LONG).show();
         }
+
+        if (this.state == DETECT_NEW_TAGS) {
+            JSONObject newTag = new JSONObject();
+            try {
+                newTag.put("state", "detect_new_tags");
+                newTag.put("tag", this.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            TCPCommunicator.getInstance().writeToSocketFromClient(newTag, UIHandler, this);
+
+            Toast.makeText(getApplicationContext(), "Sending NFC Tag " + this.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)), Toast.LENGTH_SHORT);
+            Log.d("PISTOL", "Sending the TAG back");
+        }
+
     }
 
     // Converting byte[] to hex string:
@@ -182,7 +211,27 @@ public class ReaderActivity extends AppCompatActivity implements TCPListener {
 
     @Override
     public void onTCPMessageReceived(String message) {
+        JSONObject received;
+        try {
+            received = new JSONObject(message);
+            String state = received.getString("state");
+            if (state.equals("detect_new_tags")) {
+                this.state = DETECT_NEW_TAGS;
 
+                UIHandler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(getApplicationContext(), "Swipe the NFC Tag", Toast.LENGTH_SHORT);
+                    }
+                });
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
