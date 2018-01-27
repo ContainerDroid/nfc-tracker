@@ -124,10 +124,7 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-        Log.d(TAG, "handleIntent: outside if");
-        Log.d(TAG, intent.toString());
         if (intent.getAction() == NfcAdapter.ACTION_TECH_DISCOVERED) {
-            Log.d(TAG, "handleIntent: inside if");
             Toast.makeText(getApplicationContext(), "NFC Tag: " +
                             this.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)),
                             Toast.LENGTH_LONG).show();
